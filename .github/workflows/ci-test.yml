@@ -1,11 +1,6 @@
 name: OpenCue Rust Build Pipeline
 
-on:
-  push:
-    branches: ["master"]
-  pull_request:
-    branches: ["master"]
-
+on: push
 env:
   CARGO_TERM_COLOR: always
   # Incremental compilation hurts CI clean builds (extra disk I/O, larger
@@ -106,9 +101,8 @@ jobs:
       # cache is populated even if a test later fails. `--verbose` is dropped
       # — log volume noticeably slows Windows runners and the failure output
       # is enough for triage.
-      - name: Build tests
-        working-directory: rust
-        run: cargo test -p rqd --no-run
+      - name: Check build
+        run: go build ./...
       - name: Run tests
         working-directory: rust
         run: cargo test -p rqd
